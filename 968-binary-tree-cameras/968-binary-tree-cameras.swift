@@ -14,18 +14,21 @@
  * }
  */
 class Solution {
+    
     enum State {
         case proccessing, installed, end
     }
     
     func minCameraCover(_ root: TreeNode?) -> Int {
-        var ans = 0
-        if status(root, &ans) == .proccessing {
-            ans += 1
-        }
-        return ans 
+        var ans = 0; return status(root, &ans) == .proccessing ? ans + 1 : ans
     }
     
+    /// Find the number of need cameras. `Complexity`: O(n) time and (h) space.
+    /// The `h` is the height of the recursion stack.
+    /// - parameters:
+    ///   - root: Custom data-type. root node of a binary tree.
+    ///   - ans: The modified `ans` variable is the number of needed camera.
+    /// - returns: The `State` enum value would be `proccessing`, `installed` and `end`
     func status(_ root: TreeNode?, _ ans: inout Int) -> State {
         guard let root = root else { return .end }
         
