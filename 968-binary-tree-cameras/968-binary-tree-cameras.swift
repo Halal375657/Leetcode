@@ -14,29 +14,33 @@
  * }
  */
 class Solution {
+    enum State {
+        case proccessing, installed, end
+    }
+    
     func minCameraCover(_ root: TreeNode?) -> Int {
         var ans = 0
-        if status(root, &ans) == "Proccessing" {
+        if status(root, &ans) == .proccessing {
             ans += 1
         }
         return ans 
     }
     
-    func status(_ root: TreeNode?, _ ans: inout Int) -> String {
-        guard let root = root else { return "end" }
+    func status(_ root: TreeNode?, _ ans: inout Int) -> State {
+        guard let root = root else { return .end }
         
         let left = status(root.left, &ans)
         let right = status(root.right, &ans)
         
-        if left == "Proccessing" || right == "Proccessing" {
+        if left == .proccessing || right == .proccessing {
             ans += 1
-            return "Installed"
+            return .installed
         }
         
-        if left == "Installed" || right == "Installed" {
-            return "end"
+        if left == .installed || right == .installed {
+            return .end
         }
         
-        return "Proccessing"
+        return .proccessing
     }
 }
