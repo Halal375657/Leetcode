@@ -1,10 +1,14 @@
 class Solution {
     func minCostClimbingStairs(_ cost: [Int]) -> Int {
-        let n = cost.count
-        var dp = Array(repeating: 0, count: n+2)
-        for i in stride(from: n-1, to: -1, by: -1) {
-            dp[i] = cost[i] + min(dp[i+1], dp[i+2])
+        // [1, 100, 1, 1, 1, 100, 1, 1, 100, 1]
+        // (0, 0) -> (0, 1) -> (1, 100) -> (100, 2) -> (2, 3) -> (3, 3) -> (3, 103) -> (103, 4) -> (4, 5) -> (5, 104) -> (5, 6)
+        
+        var first = 0; var second = 0;
+        for (index, val) in cost.enumerated() {
+            var temp = second
+            second = val + min(first, second)
+            first = temp
         }
-        return min(dp[0], dp[1])
+        return min(first, second)
     }
 }
